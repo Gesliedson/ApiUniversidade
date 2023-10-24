@@ -30,7 +30,7 @@ namespace apiUniversidade.Controllers
                 return NotFound();
             
             return Cursos;
-            
+
         }   
 
         [HttpPost]
@@ -51,6 +51,7 @@ namespace apiUniversidade.Controllers
             if(curso is null)
                 return NotFound("Curso não encontrado");
             return curso;
+            
         }
     }
 }
