@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using apiUniversidade.Context;
 using apiUniversidade.Model;
@@ -29,6 +31,26 @@ namespace apiUniversidade.Controllers
             
             return Cursos;
             
-        }       
+        }   
+
+        [HttpPost]
+        public ActionResult Post (Curso curso){
+            _context.Cursos.Add(curso);
+            _context.SaveChanges();
+
+            return new CreatedAtRouteResult ("GetCurso", new {id = curso.Id},curso);
+
+        }
+
+        //PROCURA ALGO NO BANCO DE DADOS. RETORNA NULO SE NÃO ENCONTRAR NADA
+
+        [HttpGet("{id:int}", Name = "GetCurso")]
+        public ActionResult<Curso> Get(int id)
+        {
+            var curso = _context.Cursos.FirstOrDefault(p=>p.Id == id);
+            if(curso is null)
+                return NotFound("Curso não encontrado");
+            return curso;
+        }
     }
 }
