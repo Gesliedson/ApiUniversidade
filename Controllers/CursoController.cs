@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using apiUniversidade.Context;
 using apiUniversidade.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace apiUniversidade.Controllers
 {
@@ -22,6 +23,7 @@ namespace apiUniversidade.Controllers
             _logger = logger;
             _context = context;
          }
+         
         [HttpGet]
         public ActionResult<IEnumerable<Curso>> Get()
         {
@@ -51,7 +53,21 @@ namespace apiUniversidade.Controllers
             if(curso is null)
                 return NotFound("Curso não encontrado");
             return curso;
+
+        }
+
+        //PROCURA ALGO NO BANCO DE DADOS. RETORNA NULO SE NÃO ENCONTRAR NADA
+
+        [HttpPut("id:int")]
+        public ActionResult Put ( int id, Curso curso){
+            if(id != curso.Id)
+                return BadRequest();
             
+            _context.Entry(curso).State = EntityState.Modified;
+            _context.SaveChanges(); 
+
+            return Ok (curso);
+
         }
     }
 }
