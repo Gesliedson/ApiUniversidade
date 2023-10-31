@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using apiUniversidade.Context;
 using apiUniversidade.Model;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,10 +16,14 @@ namespace apiUniversidade.Controllers
     [ApiController]
     [Route("[controller]")]
     public class CursoController : Controller
+    
     {
        private readonly ILogger<CursoController> _logger;
+
          private readonly apiUniversidadeContext _context;
+
          public CursoController(ILogger<CursoController> logger, apiUniversidadeContext context)
+
          {
             _logger = logger;
             _context = context;
@@ -56,8 +61,6 @@ namespace apiUniversidade.Controllers
 
         }
 
-        //PROCURA ALGO NO BANCO DE DADOS. RETORNA NULO SE NÃO ENCONTRAR NADA
-
         [HttpPut("id:int")]
         public ActionResult Put ( int id, Curso curso){
             if(id != curso.Id)
@@ -68,6 +71,20 @@ namespace apiUniversidade.Controllers
 
             return Ok (curso);
 
+        }
+
+        [HttpDelete ("{id int}")] 
+
+         public ActionResult Delete(int id) {
+            var curso= _context.Cursos.FirstOrDefault (P=> P.Id == id);
+
+            if (curso is null) {
+
+                return NotFound();
+             }
+                _context.Cursos.Remove(curso);
+                _context.SaveChanges();
+                return Ok (curso);
         }
     }
 }
