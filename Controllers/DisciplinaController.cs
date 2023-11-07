@@ -33,31 +33,17 @@ namespace apiUniversidade.Controllers
 
         }
 
-        [HttpGet(Name = "disciplinas")]
-        public List<Disciplina> GetDisciplina(){
-            List<Disciplina> Disciplinas = new List<Disciplina>();
+        [HttpGet]
 
-            Disciplina d1 = new Disciplina();
-            d1.Nome = "programação para internet";
-            d1.CargaHoraria = 60;
-            d1.Semestre = 8;
-
-            Disciplina d2 = new Disciplina();
-            d2.Nome = "projeto de Software";
-            d2.CargaHoraria = 60;
-            d2.Semestre = 8;
-
-            Disciplina d3 = new Disciplina();
-            d3.Nome = "Autoria Web";
-            d3.CargaHoraria = 60;
-            d3.Semestre = 8;
-
-            Disciplinas.Add(d1);
-            Disciplinas.Add(d2);
-            Disciplinas.Add(d3);
-
+        public ActionResult<IEnumerable<Disciplina>> Get()
+        {
+            var Disciplinas= _context.Disciplinas.ToList();
+            if (Disciplinas is null)
+                return NotFound();
+            
             return Disciplinas;
         }
+
 
         [HttpPost]
         public ActionResult Post (Disciplina disciplina){
@@ -65,9 +51,7 @@ namespace apiUniversidade.Controllers
             _context.Disciplinas.Add(disciplina);
             _context.SaveChanges();
 
-            return new CreatedAtRouteResult ("GetDisciplina", new {id = disciplina.Id},disciplina);
-            
-                    
+            return new CreatedAtRouteResult ("GetDisciplina", new {id = disciplina.Id},disciplina);       
         }
 
 

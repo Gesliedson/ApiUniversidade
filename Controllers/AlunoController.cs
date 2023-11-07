@@ -28,20 +28,16 @@ namespace apiUniversidade.Controllers
             _context = context;
         }
 
-        [HttpGet(Name = "alunos")]
-        public List<Aluno> getAluno(){
-            List<Aluno> alunos = new List<Aluno>();
-
-            Aluno a1 = new Aluno();
-            a1.Nome = "Gesliedson";
-            a1.Id = 2020;
-            a1.DataNascimento = "10-10-2004";
-            a1.CPF = "xxx.xxx.xxx-xx";
-
-            alunos.Add(a1);
+        [HttpGet]
+        public ActionResult<IEnumerable<Aluno>> Get()
+        {
+            var Alunos = _context.Alunos.ToList();
+            if (Alunos is null)
+                return NotFound();
             
-            return alunos;
-        }
+            return Alunos;
+
+        } 
 
         [HttpPost]
         public ActionResult Post (Aluno aluno){
