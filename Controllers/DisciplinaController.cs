@@ -8,11 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-
-
-
+using Microsoft.AspNetCore.Authorization;
 namespace apiUniversidade.Controllers
+
+
 {
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
     [Route("[controller]")]
 
@@ -68,7 +69,6 @@ namespace apiUniversidade.Controllers
 
 
         [HttpPut("id:int")]
-
         public ActionResult Put ( int id, Disciplina disciplina){
             if(id != disciplina.Id)
                 return BadRequest();
@@ -81,10 +81,9 @@ namespace apiUniversidade.Controllers
 
 
         [HttpDelete ("{id:int}")] 
-
          public ActionResult Delete(int id) {
             var disciplina= _context.Disciplinas.FirstOrDefault (P=> P.Id == id);
-
+            
             if (disciplina is null) {
 
                 return NotFound();

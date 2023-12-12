@@ -6,12 +6,14 @@ using apiUniversidade.Model;
 using Microsoft.AspNetCore.Mvc;
 using apiUniversidade.Context;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Authorization;
 namespace apiUniversidade.Controllers
+
+
 {
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
     [Route("api/[controller]")]
-
 
     public class AlunoController : Controller
 
