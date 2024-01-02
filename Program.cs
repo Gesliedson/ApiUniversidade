@@ -41,7 +41,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,
-                ValidAudience = builder.Configuration [ "TokenConfiguration: Audience"],
+                ValidAudience = builder.Configuration ["TokenConfiguration:Audience"],
+                ValidIssuer = builder.Configuration["TokenConfiguration:Issuer"],
                 ValidateIssuerSigningKey= true, 
                 IssuerSigningKey = new SymmetricSecurityKey (
                     Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]))
@@ -60,6 +61,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseAuthentication();
 app.MapControllers();
 app.Run();
 

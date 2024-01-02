@@ -48,8 +48,7 @@ namespace apiUniversidade.Controllers
             _context.SaveChanges();
 
             return new CreatedAtRouteResult ("GetAluno", new {id = aluno.Id},aluno);
-            
-                    
+                            
         }
 
 
@@ -77,8 +76,7 @@ namespace apiUniversidade.Controllers
             return Ok (aluno);
         }
 
-
-        [HttpDelete ("{id int}")] 
+        [HttpDelete ("{id:int}")] 
 
          public ActionResult Delete(int id) {
             var aluno= _context.Alunos.FirstOrDefault (P=> P.Id == id);

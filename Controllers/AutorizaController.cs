@@ -33,8 +33,7 @@ public class AutorizaController : Controller
             + DateTime.Now.ToLongDateString();
     }
 
-
-[HttpPost("register")]
+    [HttpPost("register")]
     public async Task<ActionResult> RegisterUser ([FromBody] UsuarioDTO model) {
         var user = new IdentityUser{
             UserName= model.Email,
@@ -84,7 +83,7 @@ public class AutorizaController : Controller
 
              JwtSecurityToken token = new JwtSecurityToken(
                 issuer: _configuration["TokenConfiguration:Issuer"],
-                audience: _configuration ["TokenConfiguration:Audiance"],
+                audience: _configuration ["TokenConfiguration:Audience"],
                 claims: claims,
                 expires: expiration,
                 signingCredentials: credentials

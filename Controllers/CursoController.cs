@@ -32,14 +32,10 @@ namespace apiUniversidade.Controllers
             _context = context;
          }
          
-        [HttpGet (Name = "GetExemplo")]
-        [Route ("exemplo")]
-
         public string GetExemplo ()
         {
             return "Api v1";
         }
-
 
         [HttpGet]
         public ActionResult<IEnumerable<Curso>> Get()
@@ -85,7 +81,7 @@ namespace apiUniversidade.Controllers
 
         }
 
-        [HttpDelete ("{id int}")] 
+        [HttpDelete ("{id:int}")] 
 
          public ActionResult Delete(int id) {
             var curso= _context.Cursos.FirstOrDefault (P=> P.Id == id);
